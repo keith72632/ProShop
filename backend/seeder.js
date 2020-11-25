@@ -57,3 +57,5 @@ if (process.argv[2] === '-d') {
 };
 
 */
+
+importData()
