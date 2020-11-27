@@ -21,7 +21,8 @@ useEffect(() => {
 
     return (
         <>
-            <h1>Latest Products</h1>
+            <h1>Welcome to Auction House</h1>
+            <h2>Latest Products</h2>
             {loading ? <h2>...loading</h2> : error ? <Message variant='danger '>{error}</Message>: 
             <Row>
                 {products.map((product) => (
