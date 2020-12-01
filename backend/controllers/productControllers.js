@@ -15,4 +15,21 @@ const getProductById =  asyncHandler(async(req, res) => {
     }
 });
 
-export { getProductById, getProducts } 
+const addProduct = asyncHandler(async(req, res) => {
+    const { name, image, description, brand, category, price, countInStock, rating, numReviews } = req.body
+    const product = new Product({
+        name,
+        image,
+        description,
+        brand,
+        category,
+        price,
+        countInStock,
+        rating,
+        numReviews,
+      })
+      res.status(201)
+      await product.save()
+})
+
+export { getProductById, getProducts, addProduct } 
