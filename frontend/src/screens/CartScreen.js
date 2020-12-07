@@ -17,8 +17,6 @@ const CartScreen = ({ match, location, history }) => {
     
     const { cartItems } = cart
 
-    console.log(cartItems)
-
 
     useEffect(() => {
         if(productId) {
@@ -34,7 +32,6 @@ const CartScreen = ({ match, location, history }) => {
         history.push('/login?redirect=shipping')
     }
 
-    console.log(qty)
     return (
         <Row>
             <Col md={8}>
