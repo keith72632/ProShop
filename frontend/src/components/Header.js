@@ -32,9 +32,9 @@ const Header = () => {
                                 <LinkContainer to='/profile'>
                                     <NavDropdown.Item>Profile</NavDropdown.Item>
                                 </LinkContainer>
-                                <NavDropdown.Item onClick={logoutHandler}>
-                                    Logout
-                                </NavDropdown.Item>
+                                <LinkContainer to='/'>
+                                    <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
+                                </LinkContainer>
                             </NavDropdown>
                         ) : <LinkContainer to='/login'>
                         <Nav.Link href='/login'><i className='fas fa-user'></i>Sign in</Nav.Link>

@@ -21,7 +21,7 @@ const OrderScreen = ({match}) => {
     const { order, loading, error } = orderDetails
 
     const orderPay = useSelector(state => state.orderPay)
-    const { loading: loadingPay, success: successPay } = orderPay
+    const { loading: loadingPay, success: successPay, error: paypalError } = orderPay
 
     
 
@@ -150,6 +150,7 @@ const OrderScreen = ({match}) => {
                         </ListGroup.Item>
                         {!order.isPaid && (
                             <ListGroup.Item>
+                                {paypalError && <Message varaint='danger'>Refresh Page If there is no PayPal button here</Message>}
                                 {loadingPay && <Loader />}
                                 {!sdkReady ? <Loader /> : (
                                     <PayPalButton amount={order.totalPrice} onSuccess={successPaymentHandler}/>

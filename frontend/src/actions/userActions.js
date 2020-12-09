@@ -14,8 +14,8 @@ import {
     USER_UPDATE_FAIL,
     USER_DETAILS_RESET 
 } from "../constants/userConstants"
-
 import { ORDER_LIST_MY_RESET } from '../constants/orderConstants'
+import { CART_LOGOUT_RESET } from '../constants/cartConstants'
 
 import axios from 'axios'
 
@@ -51,6 +51,7 @@ export const logout = () => (dispatch) => {
     dispatch({ type: USER_LOGOUT})
     dispatch({ type: USER_DETAILS_RESET})
     dispatch({ type: ORDER_LIST_MY_RESET})
+    dispatch({ type: CART_LOGOUT_RESET})
 }
 
 export const register = (name, email, password) => async(dispatch) => {
