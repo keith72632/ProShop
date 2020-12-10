@@ -1,11 +1,16 @@
 import express from 'express'
 import mongoose from 'mongoose'
-import { authUser, getUserProfile, registerUser, updateUserProfile } from '../controllers/usersControllers.js'
-import { protect } from '../middleware/authMiddleware.js' 
+import { 
+    authUser, 
+    getUserProfile, 
+    registerUser, 
+    updateUserProfile,
+    getUsers } from '../controllers/usersControllers.js'
+import { protect, admin } from '../middleware/authMiddleware.js' 
 const router = express.Router();
 
 //Fetch all products
-router.route('/').post(registerUser)
+router.route('/').post(registerUser).get(protect, admin, getUsers)
 
 router.post('/login', authUser)
 
