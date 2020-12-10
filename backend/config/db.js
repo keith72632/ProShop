@@ -5,7 +5,8 @@ const connectDB = async() => {
         const connect = await mongoose.connect("mongodb+srv://thinmint:tigers10@clusterk.98gsi.mongodb.net/proshop?retryWrites=true&w=majority", {
             useUnifiedTopology: true,
             useNewUrlParser: true,
-            useCreateIndex: true
+            useCreateIndex: true,
+            useFindAndModify: false
         });
 
         console.log(`MongoDB Connected: ${connect.connection.host}`.cyan.underline)

@@ -8,6 +8,7 @@ import { login, register } from '../actions/userActions'
 import FormContainer from '../components/FormContainer'
 import { LinkContainer } from 'react-router-bootstrap'
 import { listUsers } from '../actions/userActions'
+import { deleteUser } from '../actions/userActions'
 
 const UserListScreen = ({history}) => {
     const dispatch = useDispatch()
@@ -17,6 +18,9 @@ const UserListScreen = ({history}) => {
 
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
+
+    const userDelete = useSelector(state => state.userDelete)
+    const { success: successDelete } = userDelete
     
     useEffect(() => {
         if(userInfo && userInfo.isAdmin) {
@@ -24,10 +28,12 @@ const UserListScreen = ({history}) => {
         } else {
             history.push('/login')
         }
-    }, [dispatch, history])
+    }, [dispatch, history, successDelete])
 
     const deleteHandler = (id) => {
-        console.log('delete user')
+        if(window.confirm('Are you sure')) {
+            dispatch(deleteUser(id))
+        }
     }
 
     return (
