@@ -1,5 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
-import { productListReducer, productDetailsReducer } from './reducers/productReducers'
+import { productListReducer, productDetailsReducer, productDeleteReducer, productUpdateReducer, productCreateReducer } from './reducers/productReducers'
 import { userLoginReducer, userRegisterReducer, userDetailsReducer, userUpdateProfileReducer, userListReducer,
 userDeleteReducer, userAdminUpdateReducer } from './reducers/userReducers'
 import { cartReducer } from './reducers/cartReducers'
@@ -10,6 +10,9 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 const reducer = combineReducers({
     productList: productListReducer,
     productDetails: productDetailsReducer,
+    productDelete: productDeleteReducer,
+    productUpdate: productUpdateReducer,
+    productCreate: productCreateReducer,
     cart: cartReducer,
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,

@@ -1,6 +1,6 @@
 import express from 'express'
 import mongoose from 'mongoose'
-import { getProductById, getProducts, addProduct } from '../controllers/productControllers.js'
+import { getProductById, getProducts, addProduct, deleteProduct, updateProduct } from '../controllers/productControllers.js'
 
 const router = express.Router();
 
@@ -8,7 +8,10 @@ const router = express.Router();
 router.route('/').get(getProducts);
 
 //Fetch by id
-router.route('/:id').get(getProductById)
+router.route('/:id')
+    .get(getProductById)
+    .delete(deleteProduct)
+    .put(updateProduct)
 
 router.route('/').post(addProduct)
 
