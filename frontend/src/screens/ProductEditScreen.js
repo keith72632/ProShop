@@ -15,6 +15,7 @@ const ProductEditScreen = ({match, history}) => {
     const [ price, setPrice ] = useState('')
     const [ countInStock, setCountInStock ] = useState('')
     const [ description, setDescription ] = useState('')
+    const [ brand, setBrand ] = useState('')
 
     const dispatch = useDispatch()
 
@@ -26,13 +27,9 @@ const ProductEditScreen = ({match, history}) => {
     const { loading, error, userInfo } = userLogin
 
     useEffect(() => {
-        if(product) {
-            setName(product.name)
-            setPrice(product.price)
-        } else {
-            dispatch(listProductDetails(productId))
-        }
-    }, [dispatch, setName, setPrice])
+        dispatch(listProductDetails(productId))
+       
+    }, [dispatch])
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -40,7 +37,9 @@ const ProductEditScreen = ({match, history}) => {
         dispatch(updateProduct(productId, {
             name,
             price,
-            countInStock
+            countInStock,
+            description,
+            brand
         }))
     }
     return (
@@ -49,7 +48,8 @@ const ProductEditScreen = ({match, history}) => {
                 Go Back
             </Link>
             <FormContainer>
-            <h1>Edit {product.name} {product._id}</h1>
+            <h1>Edit {product.name}</h1>
+            <h1>ID: {product._id}</h1>
             {loading && <Loader/>}
             {error && <Message varaint='danger'>{error}</Message>}
             {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
@@ -63,8 +63,16 @@ const ProductEditScreen = ({match, history}) => {
                     <Form.Control type='number' placeholder='Enter Price' value={price} onChange={(e) => setPrice(e.target.value)} />   
                 </Form.Group>
                 <Form.Group controlId='countInStock'>
-                    <Form.Label>Price</Form.Label>
+                    <Form.Label>Quantity</Form.Label>
                     <Form.Control type='number' placeholder='Enter Quantity' value={countInStock} onChange={(e) => setCountInStock(e.target.value)} />   
+                </Form.Group>
+                <Form.Group controlId='brand'>
+                    <Form.Label>Brand</Form.Label>
+                    <Form.Control type='text' placeholder='Enter Brand' value={brand} onChange={(e) => setBrand(e.target.value)} />   
+                </Form.Group>
+                <Form.Group controlId='description'>
+                    <Form.Label>description</Form.Label>
+                    <br></br><textarea value={description} onChange={(e) => setDescription(e.target.value)} />   
                 </Form.Group>
                 <Button type='submit' variant='primary'>
                     Update

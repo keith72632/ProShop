@@ -78,7 +78,7 @@ export const productCreateReducer = (state = { }, action) => {
         case PRODUCT_CREATE_FAIL:
             return { loading: false, error: action.payload }
         case PRODUCT_CREATE_RESET:
-            return { product: action.payload}
+            return {}
         default: 
             return state
     }

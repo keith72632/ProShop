@@ -15,21 +15,22 @@ const getProductById =  asyncHandler(async(req, res) => {
     }
 });
 
-const addProduct = asyncHandler(async(req, res) => {
-    const { name, image, description, brand, category, price, countInStock, rating, numReviews } = req.body
+const createProduct = asyncHandler(async(req, res) => {
     const product = new Product({
-        name,
-        image,
-        description,
-        brand,
-        category,
-        price,
-        countInStock,
-        rating,
-        numReviews,
-      })
-      res.status(201)
-      await product.save()
+        name: 'sample name',
+        price: 0,
+        user: req.user._id,
+        image: '/images/sample.jpeg',
+        brand: 'sample brand',
+        category: 'sample category',
+        countInStock: 0,
+        numReviews: 0,
+        description: 'sample description'
+    })
+
+    const createProduct = await product.save()
+    res.status(201).json(product)
+    
 })
 
 const deleteProduct = asyncHandler(async(req, res) => {
@@ -66,4 +67,4 @@ const updateProduct = asyncHandler(async(req, res) => {
     }
 })
 
-export { getProductById, getProducts, addProduct, deleteProduct, updateProduct } 
+export { getProductById, getProducts, createProduct, deleteProduct, updateProduct } 

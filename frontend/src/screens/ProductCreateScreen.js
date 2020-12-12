@@ -7,7 +7,8 @@ import Loader from '../components/Loader'
 import { login, register, getUserDetails, updateUser } from '../actions/userActions'
 import FormContainer from '../components/FormContainer'
 import { USER_ADMIN_UPDATE_RESET } from '../constants/userConstants'
-import { listProductDetails, updateProduct, createProduct } from '../actions/productActions'
+import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
+import { createProduct } from '../actions/productActions'
 
 const ProductCreateScreen = ({match, history}) => {
     const productId = match.params.id
@@ -17,6 +18,7 @@ const ProductCreateScreen = ({match, history}) => {
     const [ description, setDescription ] = useState('')
     const [ brand, setBrand ] = useState('')
     const [ image, setImage ] = useState('')
+    const [ category, setCategory ] = useState('')
 
     const dispatch = useDispatch()
 
@@ -27,6 +29,13 @@ const ProductCreateScreen = ({match, history}) => {
     const userLogin = useSelector(state => state.userLogin)
     const { loading, error, userInfo } = userLogin
 
+    const userDetails = useSelector(state => state.userDetails)
+    const { user } = userDetails
+
+    const productCreate = useSelector(state => state.productCreate)
+    const { loading: createLoading, success: successLoading, error: createError, product: createProduct} = productCreate
+    
+
     const createdProduct = {
         name,
         price,
@@ -34,15 +43,23 @@ const ProductCreateScreen = ({match, history}) => {
         description,
         image,
         brand,
-        user: userInfo._id,
+        category,
+        user
     }
+
+    useEffect(() => {
+        if(!userInfo.isAdmin) {
+            history.push('/login')
+        }
+    }, [dispatch])
 
 
     const submitHandler = (e) => {
         e.preventDefault()
-        console.log('submit')
         dispatch(createProduct(createdProduct))
     }
+
+
     return (
         <>
             <Link to='/admin/productlist' className='btn btn-light my-3'>
@@ -52,6 +69,8 @@ const ProductCreateScreen = ({match, history}) => {
             <h1>Create Product</h1>
             {loading && <Loader/>}
             {error && <Message varaint='danger'>{error}</Message>}
+            {createLoading && <Loader/>}
+            {createError && <Message varaint='danger'>{error}</Message>}
             {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
                 <Form onSubmit={submitHandler}>
                 <Form.Group controlId='name'>
@@ -69,6 +88,10 @@ const ProductCreateScreen = ({match, history}) => {
                 <Form.Group controlId='brand'>
                     <Form.Label>Price</Form.Label>
                     <Form.Control type='text' placeholder='Enter Brand' value={brand} onChange={(e) => setBrand(e.target.value)} />   
+                </Form.Group>
+                <Form.Group controlId='category'>
+                    <Form.Label>Category</Form.Label>
+                    <Form.Control type='text' placeholder='Enter Category' value={category} onChange={(e) => setCategory(e.target.value)} />   
                 </Form.Group>
                 <Form.Group controlId='image'>
                     <Form.Label>Image</Form.Label>

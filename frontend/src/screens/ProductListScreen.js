@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { LinkContainer } from 'react-router-bootstrap'
-import { deleteProduct, listProducts } from '../actions/productActions'
+import { deleteProduct, listProducts, createProduct } from '../actions/productActions'
 
 const ProductListScreen = ({history}) => {
     const dispatch = useDispatch()
@@ -24,16 +24,20 @@ const ProductListScreen = ({history}) => {
     const deleteHandler = (id) => {
         if(window.confirm('Are you sure you want to delete this item?')) {
             dispatch(deleteProduct(id))
-            history.push('/')
+            window.location.reload(true)
         }
+    }
+
+    const createHandler = () => {
+        dispatch(createProduct())
+        window.location.reload(true)
+        
     }
 
     return (
         <>
          <h1>Products</h1>
-         <LinkContainer to={'/admin/product/create'}>
-             <Button>Add Item</Button>
-         </LinkContainer>
+             <Button onClick={() => createHandler()}>Add Item</Button>
          {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
              <Table striped bordered hover responsive className='table-sm'>
                  <thead>
