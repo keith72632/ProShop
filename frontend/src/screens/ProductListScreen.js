@@ -46,6 +46,7 @@ const ProductListScreen = ({history}) => {
                          <th>Name</th>
                          <th>Price</th>
                          <th>Number in Stock</th>
+                         <th>Date Created</th>
                          <th></th>
                      </tr>
                  </thead>
@@ -56,6 +57,7 @@ const ProductListScreen = ({history}) => {
                              <td>{product.name}</td>
                              <td>{product.price}</td>
                              <td>{product.countInStock}</td>
+                             <td>{product.dateCreated.split('T')[0]}</td>
                              <td>
                                  <LinkContainer to={`/admin/product/${product._id}/edit`}>
                                      <Button variant='light' className='btn-sm'><i className='fas fa-edit'></i></Button>

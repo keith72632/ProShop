@@ -16,6 +16,7 @@ const ProductEditScreen = ({match, history}) => {
     const [ countInStock, setCountInStock ] = useState('')
     const [ description, setDescription ] = useState('')
     const [ brand, setBrand ] = useState('')
+    const [ image, setImage ] = useState('')
 
     const dispatch = useDispatch()
 
@@ -27,7 +28,9 @@ const ProductEditScreen = ({match, history}) => {
     const { loading, error, userInfo } = userLogin
 
     useEffect(() => {
-        dispatch(listProductDetails(productId))
+        if(!product._id || product._id !== productId) {
+            dispatch(listProductDetails(productId))
+        }
        
     }, [dispatch])
 
@@ -39,8 +42,10 @@ const ProductEditScreen = ({match, history}) => {
             price,
             countInStock,
             description,
-            brand
+            brand,
+            image,
         }))
+        history.push('/admin/productlist')
     }
     return (
         <>
@@ -69,6 +74,10 @@ const ProductEditScreen = ({match, history}) => {
                 <Form.Group controlId='brand'>
                     <Form.Label>Brand</Form.Label>
                     <Form.Control type='text' placeholder='Enter Brand' value={brand} onChange={(e) => setBrand(e.target.value)} />   
+                </Form.Group>
+                <Form.Group controlId='image'>
+                    <Form.Label>Image</Form.Label>
+                    <Form.Control type='text' placeholder='Enter Image' value={image} onChange={(e) => setImage(e.target.value)} />   
                 </Form.Group>
                 <Form.Group controlId='description'>
                     <Form.Label>description</Form.Label>
