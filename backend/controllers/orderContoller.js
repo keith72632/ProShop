@@ -48,7 +48,7 @@ const  getOrderById = asyncHandler(async(req, res) => {
 //upate order to paid
 //Get request /api/orders/:id/pay
 
-const  updateOrderToPaid = asyncHandler(async(req, res) => {
+const updateOrderToPaid = asyncHandler(async(req, res) => {
     const order = await Order.findById(req.params.id)
 
     if(order) {
@@ -68,12 +68,37 @@ const  updateOrderToPaid = asyncHandler(async(req, res) => {
     }
 })
 
+//upate order to delivered
+//put request /api/orders/:id
+
+const updateOrderToDelivered = asyncHandler(async(req, res) => {
+    const order = await Order.findById(req.params.id)
+
+  if(order) {
+      order.isDelivered = true
+      const updatedOrder = await order.save()
+      res.json(order)
+  } else {
+      res.status(404).json('No order with this id')
+  }
+})
+
 //GET logged in user orders
 //route GET /api/orders/myorders
-const  getMyOrders = asyncHandler(async(req, res) => {
+const getMyOrders = asyncHandler(async(req, res) => {
     const orders = await Order.find({ user: req.user._id })
 
     res.json(orders)
 })
 
-export { addOrderItems, getOrderById, updateOrderToPaid, getMyOrders }
+//GET all orders
+//route GET /api/orders/
+const getAllOrders = asyncHandler(async(req, res) => {
+    const orders = await Order.find()
+
+    res.json(orders)
+})
+
+
+
+export { addOrderItems, getOrderById, updateOrderToPaid, getMyOrders, getAllOrders, updateOrderToDelivered }
