@@ -1,6 +1,6 @@
 import express from 'express'
 import mongoose from 'mongoose'
-import { getProductById, getProducts, createProduct, deleteProduct, updateProduct } from '../controllers/productControllers.js'
+import { getProductById, getProducts, createProduct, deleteProduct, updateProduct, createProductReview } from '../controllers/productControllers.js'
 import { protect, admin} from '../middleware/authMiddleware.js'
 
 const router = express.Router();
@@ -16,6 +16,8 @@ router.route('/:id')
     .delete(deleteProduct)
     .put(updateProduct)
 
+router.route('/:id/reviews')
+    .post(createProductReview)
 
 
 export default router

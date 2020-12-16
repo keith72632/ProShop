@@ -41,13 +41,13 @@ const OrderListScreen = ({history}) => {
                      {orders.map(order => (
                          <tr key={order._id}>
                              <td>{order._id}</td>
-                             <td>{order.user}</td>
+                             <td>{order.user.name}</td>
                              <td>{order.totalPrice}</td>
                              <td>{order.paidAt.split('T')[0]}</td>
                              <td>{order.isDelivered ? (<i className='fas fa-times' style={{'color': 'green'}}></i>) :
                              <i className='fas fa-times' style={{'color': 'red'}}></i>}</td>
                              <td>
-                                 <LinkContainer to={`/admin/order/${order._id}/edit`}>
+                                 <LinkContainer to={`/orders/${order._id}`}>
                                      <Button variant='light' className='btn-sm'><i className='fas fa-info-circle'></i></Button>
                                  </LinkContainer>
                              </td>

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { Row, Col, Image, ListGroup } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
+import { Row, Col, Image, ListGroup, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { PayPalButton } from 'react-paypal-button-v2'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
-import { getOrderDetails, payOrder } from '../actions/orderActions'
+import { getOrderDetails, payOrder, markAsDelivered } from '../actions/orderActions'
 import Message from '../components/Message'
 import axios from 'axios'
-import { ORDER_PAY_RESET } from '../constants/orderConstants'
+import { ORDER_PAY_RESET, ORDER_DELIVERED_RESET } from '../constants/orderConstants'
 
-const OrderScreen = ({match}) => {
+const OrderScreen = ({match, location}) => {
 
     const orderId = match.params.id
 
@@ -22,6 +23,12 @@ const OrderScreen = ({match}) => {
 
     const orderPay = useSelector(state => state.orderPay)
     const { loading: loadingPay, success: successPay, error: paypalError } = orderPay
+
+    const userLogin = useSelector(state => state.userLogin)
+    const { loading: userLoading, error: userError, userInfo } = userLogin
+
+    const orderDelivered = useSelector(state => state.orderDelivered)
+    const { loading: deliveredLoading, error: deliveredError, success: deliveredSuccess } = orderDelivered
 
     
 
@@ -47,8 +54,9 @@ const OrderScreen = ({match}) => {
             document.body.appendChild(script)
         }
 
-        if(!order || successPay) {
+        if(!order || successPay || deliveredSuccess) {
             dispatch({ type: ORDER_PAY_RESET })
+            dispatch({ type: ORDER_DELIVERED_RESET })
             dispatch(getOrderDetails(orderId))
         } else if(!order.isPaid) {
             if(!window.paypal) {
@@ -69,6 +77,12 @@ const OrderScreen = ({match}) => {
         dispatch(payOrder(orderId, paymentResult))
     }
 
+    const markAsDeliveredHandler = () => {
+        if(userInfo.isAdmin) {
+            window.confirm('Are you sure this item has been delivered?')
+            dispatch(markAsDelivered(orderId))
+        }
+    }
     
     return loading ? <Loader/> : error ? <Message variant='danger'>{error}</Message> :
     <>
@@ -158,7 +172,12 @@ const OrderScreen = ({match}) => {
                             </ListGroup.Item>
                         )}
                     </ListGroup>
-                </Col>    
+                    {userInfo.isAdmin && !order.isDelivered && (
+                        <LinkContainer to={'/admin/orderlist'}>
+                            <Button onClick={markAsDeliveredHandler}>Mark As Delivered</Button>
+                        </LinkContainer>
+                )}
+                </Col>
             </Row>   
     </>
 }

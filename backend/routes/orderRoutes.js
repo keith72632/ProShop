@@ -9,7 +9,9 @@ router.route('/')
 router.route('/myorders').get(protect, getMyOrders)
 router.route('/:id')
     .get(protect, getOrderById)
-    .put(protect, updateOrderToDelivered)
+router.route('/:id/delivered')
+    .put(updateOrderToDelivered)
+
 router.route('/:id/pay').put(protect, updateOrderToPaid)
 
 export default router

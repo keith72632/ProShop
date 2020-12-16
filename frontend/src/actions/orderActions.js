@@ -180,12 +180,11 @@ export const markAsDelivered = (orderId) => async(dispatch, getState) => {
 
         const config = {
             headers: {
-                'Content-Type': 'application/json',
                 Authorization: `Bearer ${userInfo.token}`
             }
         }
 
-        const { data } = await axios.put(`/api/orders/${orderId}`, config)
+        const { data } = await axios.put(`/api/orders/${orderId}/delivered`, config)
         
         dispatch({
             type: ORDER_DELIVERED_SUCCESS,
