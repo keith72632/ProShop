@@ -25,10 +25,10 @@ const OrderScreen = ({match, location}) => {
     const { loading: loadingPay, success: successPay, error: paypalError } = orderPay
 
     const userLogin = useSelector(state => state.userLogin)
-    const { loading: userLoading, error: userError, userInfo } = userLogin
+    const {  userInfo } = userLogin
 
     const orderDelivered = useSelector(state => state.orderDelivered)
-    const { loading: deliveredLoading, error: deliveredError, success: deliveredSuccess } = orderDelivered
+    const { success: deliveredSuccess } = orderDelivered
 
     
 

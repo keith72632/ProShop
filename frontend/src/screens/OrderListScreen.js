@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { Link, Redirect } from 'react-router-dom'
 import { Button, Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
@@ -13,8 +12,6 @@ const OrderListScreen = ({history}) => {
     const orderListAll = useSelector(state => state.orderListAll)
     const { loading, error, orders } = orderListAll
 
-    const userLogin = useSelector(state => state.userLogin)
-    const { userInfo } = userLogin
 
     useEffect(() => {
         dispatch(listAllOrders())

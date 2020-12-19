@@ -6,18 +6,21 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { LinkContainer } from 'react-router-bootstrap'
 import { deleteProduct, listProducts, createProduct } from '../actions/productActions'
+import Paginate from '../components/Paginate'
 
-const ProductListScreen = ({history}) => {
+const ProductListScreen = ({ match }) => {
     const dispatch = useDispatch()
 
+    const pageNumber = match.params.pageNumber || 1
+
     const productList = useSelector(state => state.productList)
-    const { loading, error, products } = productList
+    const { loading, error, products, pages, page } = productList
 
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
     useEffect(() => {
-        dispatch(listProducts())
+        dispatch(listProducts('', pageNumber))
     }, [dispatch])
 
 
@@ -39,6 +42,7 @@ const ProductListScreen = ({history}) => {
          <h1>Products</h1>
              <Button onClick={() => createHandler()}>Add Item</Button>
          {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
+             <>
              <Table striped bordered hover responsive className='table-sm'>
                  <thead>
                      <tr>
@@ -68,6 +72,8 @@ const ProductListScreen = ({history}) => {
                      ))}
                  </tbody>
              </Table>
+             <Paginate pages={pages} page={page} isAdmin={true}/>
+             </>
          )}
         </>
     )

@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { login, register, getUserDetails, updateUser } from '../actions/userActions'
 import FormContainer from '../components/FormContainer'
-import { USER_ADMIN_UPDATE_RESET } from '../constants/userConstants'
-import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
-import { createProduct } from '../actions/productActions'
 
 const ProductCreateScreen = ({match, history}) => {
-    const productId = match.params.id
     const [ name, setName ] = useState('')
     const [ price, setPrice ] = useState('')
     const [ countInStock, setCountInStock ] = useState('')
@@ -22,10 +17,6 @@ const ProductCreateScreen = ({match, history}) => {
 
     const dispatch = useDispatch()
 
-    const productDetails = useSelector(state => state.productDetails)
-    const { loading: loadingProduct, error: errorProduct, product } = productDetails
-
-
     const userLogin = useSelector(state => state.userLogin)
     const { loading, error, userInfo } = userLogin
 
@@ -33,7 +24,7 @@ const ProductCreateScreen = ({match, history}) => {
     const { user } = userDetails
 
     const productCreate = useSelector(state => state.productCreate)
-    const { loading: createLoading, success: successLoading, error: createError, product: createProduct} = productCreate
+    const { loading: createLoading, error: createError, product: createProduct} = productCreate
     
 
     const createdProduct = {

@@ -12,13 +12,11 @@ import {
     ORDER_LIST_MY_REQUEST,
     ORDER_LIST_MY_SUCCESS,
     ORDER_LIST_ALL_SUCCESS,
-    ORDER_LIST_ALL_RESET,
     ORDER_LIST_ALL_REQUEST,
     ORDER_LIST_ALL_FAIL,
     ORDER_DELIVERED_FAIL,
     ORDER_DELIVERED_SUCCESS,
     ORDER_DELIVERED_REQUEST,
-    ORDER_DELIVERED_RESET 
 } from '../constants/orderConstants'
 
 import axios from 'axios'
@@ -184,7 +182,7 @@ export const markAsDelivered = (orderId) => async(dispatch, getState) => {
             }
         }
 
-        const { data } = await axios.put(`/api/orders/${orderId}/delivered`, config)
+        const { data } = await axios.post(`/api/orders/${orderId}/delivered`, config)
         
         dispatch({
             type: ORDER_DELIVERED_SUCCESS,

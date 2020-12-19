@@ -10,7 +10,7 @@ router.route('/myorders').get(protect, getMyOrders)
 router.route('/:id')
     .get(protect, getOrderById)
 router.route('/:id/delivered')
-    .put(updateOrderToDelivered)
+    .post(updateOrderToDelivered)
 
 router.route('/:id/pay').put(protect, updateOrderToPaid)
 
