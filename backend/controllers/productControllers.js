@@ -10,7 +10,6 @@ const getProducts = asyncHandler(async(req, res) => {
             $options: 'i'
         }
     } : {}
-    console.log(keyword)
     const count = await Product.countDocuments({...keyword})
     const products = await Product.find({...keyword}).limit(pageSize).skip(pageSize *(page - 1));
     res.json({products, page, pages: Math.ceil(count / pageSize)});
@@ -38,7 +37,7 @@ const createProduct = asyncHandler(async(req, res) => {
         description: 'sample description',
     })
 
-    const createProduct = await product.save()
+    await product.save()
     res.status(201).json(product)
     
 })
@@ -109,4 +108,13 @@ const createProductReview = asyncHandler(async(req, res) => {
     }
 })
 
-export { getProductById, getProducts, createProduct, deleteProduct, updateProduct, createProductReview } 
+//Get top rated products
+//public 
+//GET api/products/top
+const getTopRatedProducts = asyncHandler(async(req, res) => {
+   const topProducts = await Product.find({}).sort({ rating: -1 }).limit(3)
+
+   res.json(topProducts)
+})
+
+export { getProductById, getProducts, createProduct, deleteProduct, updateProduct, createProductReview, getTopRatedProducts } 

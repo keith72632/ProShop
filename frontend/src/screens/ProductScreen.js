@@ -5,8 +5,8 @@ import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import Rating from '../components/Rating'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import axios from 'axios';
 import { listProductDetails } from '../actions/productActions'
+import Meta from '../components/Meta'
 
 const ProductScreen = ({ history, match }) => {
     const [qty, setQty] = useState(1)
@@ -26,6 +26,7 @@ const addToCartHandler = () => {
 
     return (
         <>
+         <Meta title={product.name} description={product.description} />
          <Link className='btn btn-dark my-3' to='/'>Go Back</Link>
     {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
         <Row>

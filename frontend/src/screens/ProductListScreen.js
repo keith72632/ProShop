@@ -16,8 +16,6 @@ const ProductListScreen = ({ match }) => {
     const productList = useSelector(state => state.productList)
     const { loading, error, products, pages, page } = productList
 
-    const userLogin = useSelector(state => state.userLogin)
-    const { userInfo } = userLogin
 
     useEffect(() => {
         dispatch(listProducts('', pageNumber))

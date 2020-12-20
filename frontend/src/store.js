@@ -1,5 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
-import { productListReducer, productDetailsReducer, productDeleteReducer, productUpdateReducer, productCreateReducer } from './reducers/productReducers'
+import { productListReducer, productDetailsReducer, productDeleteReducer, productUpdateReducer, productCreateReducer, topProductsReducer } from './reducers/productReducers'
 import { userLoginReducer, userRegisterReducer, userDetailsReducer, userUpdateProfileReducer, userListReducer,
 userDeleteReducer, userAdminUpdateReducer } from './reducers/userReducers'
 import { cartReducer } from './reducers/cartReducers'
@@ -26,7 +26,8 @@ const reducer = combineReducers({
     orderDelivered: orderDeliveredReducer,
     userList: userListReducer,
     userDelete: userDeleteReducer,
-    userUpdate: userAdminUpdateReducer
+    userUpdate: userAdminUpdateReducer,
+    topProducts: topProductsReducer
 })
 
 const cartItemsFromStorage = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []

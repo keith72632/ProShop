@@ -6,6 +6,8 @@ import { listProducts } from '../actions/productActions'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import Paginate from '../components/Paginate'
+import ProductCarousel from '../components/ProductCaroursel'
+import Meta from '../components/Meta'
 
 const HomeScreen = ({match}) => {
     const keyword = match.params.keyword
@@ -23,7 +25,9 @@ useEffect(() => {
 
     return (
         <>
+            <Meta title={'Welcome!'} description={'Description'} />
             <h1>Welcome to Auction House</h1>
+            {!keyword && (<ProductCarousel />)}
             <h2>Latest Products</h2>
             {loading ? <h2>...loading</h2> : error ? <Message variant='danger '>{error}</Message>: ( 
             <>
